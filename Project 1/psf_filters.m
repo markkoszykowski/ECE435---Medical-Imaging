@@ -40,4 +40,3 @@ function [xyz_psf_filter, xy_psf_filter, xz_psf_filter, yz_psf_fitler] = psf_fil
     xz_psf_filter = xz_psf_filter / sum(xz_psf_filter, "all");
     yz_psf_fitler = xz_psf_filter;
 end
-
