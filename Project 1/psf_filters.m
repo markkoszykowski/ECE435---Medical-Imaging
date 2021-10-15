@@ -27,7 +27,6 @@ function [xyz_psf_filter, xy_psf_filter, xz_psf_filter, yz_psf_fitler] = psf_fil
     xyz_psf_filter = xyz_psf(X, Y, Z);
     xyz_psf_filter = xyz_psf_filter / sum(xyz_psf_filter, "all");
                 
-
     [X, Y] = meshgrid(-xy_filt_size * pixel_spacing:pixel_spacing:xy_filt_size * pixel_spacing, ...
                         -xy_filt_size * pixel_spacing:pixel_spacing:xy_filt_size * pixel_spacing);
                     
