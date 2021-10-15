@@ -130,7 +130,7 @@ slice_spacing = 0.625;
 delta_x = 1;
 delta_z = 2;
 
-[xyz_psf_filter, xy_psf_filter, xz_psf_filter, yz_psf_fitler] = psf_filters(pixel_spacing, slice_spacing, delta_x, delta_z);
+[xyz_psf_filter, xy_psf_filter, xz_psf_filter, yz_psf_fitler] = psf_filters(delta_x, delta_z, pixel_spacing, slice_spacing);
 
 figure;
 

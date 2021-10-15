@@ -1,4 +1,4 @@
-function [xyz_psf_filter, xy_psf_filter, xz_psf_filter, yz_psf_fitler] = psf_filters(pixel_spacing, slice_spacing, delta_x, delta_z)
+function [xyz_psf_filter, xy_psf_filter, xz_psf_filter, yz_psf_fitler] = psf_filters(delta_x, delta_z, pixel_spacing, slice_spacing)
 %PSF_FILTERS Return PSF filters in 3D and 2D space
     FWHM_coef = sqrt(-2 * log(.5));
 
