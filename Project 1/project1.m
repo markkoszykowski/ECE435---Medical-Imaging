@@ -127,42 +127,10 @@ end
 pixel_spacing = 0.703;
 slice_spacing = 0.625;
 
-FWHM_coef = sqrt(-2 * log(.5));
 delta_x = 1;
 delta_z = 2;
 
-std_x = delta_x / (2 * FWHM_coef);
-std_z = delta_z / (2 * FWHM_coef);
-
-psf = @(x, y, z) 1 / ((2*pi)^(3/2) * std_x * std_x * std_z) * exp(-1/2 * ((x / std_x).^2 + (y / std_x).^2 + (z / std_z) .^2));
-% Should be equal to one
-integral3(psf, -Inf, Inf, -Inf, Inf, -Inf, Inf)
-
-xy_psf = @(x, y) 1 / ((2*pi) * std_x * std_x) * exp(-1/2 * ((x / std_x).^2 + (y / std_x).^2));
-% Should be equal to one
-integral2(xy_psf, -Inf, Inf, -Inf, Inf)
-
-xz_psf = @(x, z) 1 / ((2*pi) * std_x * std_z) * exp(-1/2 * ((x / std_x).^2 + (z / std_z) .^2));
-yz_psf = xz_psf;
-% Should be equal to one
-integral2(xz_psf, -Inf, Inf, -Inf, Inf)
-
-xy_filt_size = ceil(2 * std_x / pixel_spacing);
-
-[X, Y] = meshgrid(-xy_filt_size * pixel_spacing:pixel_spacing:xy_filt_size * pixel_spacing, ...
-                    -xy_filt_size * pixel_spacing:pixel_spacing:xy_filt_size * pixel_spacing);
-                    
-xy_psf_filter = xy_psf(X, Y);
-xy_psf_filter = xy_psf_filter / sum(xy_psf_filter, "all");
-
-z_filt_size = ceil(2 * std_z / slice_spacing);
-
-[X, Z] = meshgrid(-xy_filt_size * pixel_spacing:pixel_spacing:xy_filt_size * pixel_spacing, ...
-                    -z_filt_size * slice_spacing:slice_spacing:z_filt_size * slice_spacing);
-                
-xz_psf_filter = xz_psf(X, Z);
-xz_psf_filter = xz_psf_filter / sum(xz_psf_filter, "all");
-yz_psf_fitler = xz_psf_filter;
+[xyz_psf_filter, xy_psf_filter, xz_psf_filter, yz_psf_fitler] = psf_filters(pixel_spacing, slice_spacing, delta_x, delta_z);
 
 figure;
 
