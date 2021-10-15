@@ -127,8 +127,8 @@ end
 pixel_spacing = 0.703;
 slice_spacing = 0.625;
 
-delta_x = 1;
-delta_z = 2;
+delta_x = 2;
+delta_z = 1;
 
 [xyz_psf_filter, xy_psf_filter, xz_psf_filter, yz_psf_fitler] = psf_filters(delta_x, delta_z, pixel_spacing, slice_spacing);
 
