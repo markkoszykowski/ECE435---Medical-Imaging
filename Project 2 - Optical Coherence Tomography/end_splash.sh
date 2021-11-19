@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/sh
 
 SWAP_FILE=/tmp/swap_file
 
