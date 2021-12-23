@@ -1,5 +1,5 @@
 function plotwavelet(array, level, waveletDomain)
-% PLOTLEVEL2WAVELET Plots wavelet transform at two levels
+% PLOTWAVELET Plots wavelet transform at two levels
     [c, s] = wavedec2(array, level, waveletDomain);
 
     figure;
