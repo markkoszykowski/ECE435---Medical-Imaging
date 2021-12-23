@@ -51,6 +51,7 @@ plotcrosssections(CSI1T1Run2, sagittalCrossSection, coronalCrossSection, axialCr
 plotcrosssections(CSI1T2, sagittalCrossSection, coronalCrossSection, axialCrossSection, "T2-weighted");
 
 guidingImage = rot90(squeeze(CSI1T1Run1(sagittalCrossSection, :, :)));
+
 %% III
 
 
@@ -272,8 +273,8 @@ ylabel("Maximum Average Absolute Error");
 sensingMatrices = 1000;
 
 lr = .1;
-lambda = 100;
-iterations = 10;
+lambda = 10;
+iterations = 50;
 
 p = .8;
 
