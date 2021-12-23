@@ -2,9 +2,9 @@ function plotwavelet(array, level, waveletDomain)
 % PLOTWAVELET Plots wavelet transform at two levels
     [c, s] = wavedec2(array, level, waveletDomain);
 
-    figure;
-
     waveletImage = [];
+
+    figure;
     for l = level:-1:1
         [H, V, D] = detcoef2('all', c, s, l);
         expectedSize = size(array) / (2 ^ l);
