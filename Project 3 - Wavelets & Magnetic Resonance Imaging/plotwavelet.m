@@ -34,7 +34,6 @@ function plotwavelet(array, level, waveletDomain)
 
         A = wcodemat(A(ceil(offset(1)/2):(end - floor(offset(2)/2)), ceil(offset(1)/2):(end - floor(offset(2)/2))), 255, "mat", 1);
        
-
         if l == level
             waveletImage = [A H; V D];
         else
