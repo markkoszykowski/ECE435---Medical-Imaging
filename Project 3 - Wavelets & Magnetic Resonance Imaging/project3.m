@@ -60,8 +60,8 @@ guidingImageFFT = fftshift(fft2(guidingImage));
 figure;
 imagesc(abs(guidingImageFFT));
 title("Guiding Image in Fourier Domain");
-xlabel("{\itf_{y}}");
-ylabel("{\itf_{z}}");
+xlabel("{\itk_{y}}");
+ylabel("{\itk_{z}}");
 
 flattenedGuidingImageFFT = reshape(abs(guidingImageFFT), [1, numel(guidingImageFFT)]);
 
@@ -139,8 +139,8 @@ ylabel("{\itz}");
 subplot(1, 2, 2);
 reconstructed = waverec2(compressedC, s, bestDomain);
 imagesc(reconstructed);
-title("Guiding Image " + zeroLowest + "% of Wavelet Coefficients Zeroed Out (MSE=" + ...
-        meansquarederror(cast(guidingImage, class(reconstructed)), reconstructed) + ")");
+title(["Guiding Image " + zeroLowest + "% of Wavelet Coefficients Zeroed Out", "(" + ...
+    bestDomain + ", MSE=" + meansquarederror(cast(guidingImage, class(reconstructed)), reconstructed) + ")"]);
 xlabel("{\ity}");
 ylabel("{\itz}");
 
@@ -270,27 +270,62 @@ ylabel("Maximum Average Absolute Error");
 %% VI
 
 
+close all;
+
 sensingMatrices = 1000;
 
 lr = .1;
-lambda = 10;
-iterations = 50;
+lambda = .001;
+iterations = 100;
 
-p = .8;
+ps = .2:.1:.8;
 
-[zs, s, history] = compressedsensing(guidingImage, lr, lambda, p, iterations, sensingMatrices, bestDomain, bestLevel);
-
-%%
-estimation = waverec2(zs(:, :, randi(sensingMatrices)), s, bestDomain);
+allZs = zeros([size(c) sensingMatrices length(ps)]);
 
 figure;
-imagesc(real(estimation));
-title("Calculated Reconstruction");
+for p = 1:length(ps)
+    [zs, s, history] = compressedsensing(guidingImage, lr, lambda, ps(p), iterations, sensingMatrices, bestDomain, bestLevel);
+
+    allZs(:, :, :, p) = zs;
+
+    subplot(2, 4, p);
+    plot(1:iterations, history);
+    title(["Average Object Function Value", ...
+        "(" + bestDomain + " Level " + bestLevel + ", p=" + ps(p) + ")"]);
+    xlabel("Iteration");
+    ylabel("Average LASSO Value");
+end
+
+averageSamples = 5;
+mses = zeros([1 length(ps)]);
+
+figure;
+subplot(2, 4, 1);
+imagesc(guidingImage);
+title("Groud Truth Guiding Image");
 xlabel("{\ity}");
 ylabel("{\itz}");
 
+for p = 1:length(ps)
+    estimations = zeros([size(guidingImage) averageSamples]);
+    for i = 1:averageSamples
+        estimations(:, :, i) = waverec2(allZs(:, :, randi(sensingMatrices), p), s, bestDomain);
+    end
+
+    estimation = squeeze(mean(estimations, 3));
+
+    subplot(2, 4, p+1);
+    imagesc(abs(estimation));
+    title(["Compressed Sensing Reconstruction", ...
+        "(" + bestDomain + " Level " + bestLevel + ", p=" + ps(p) + ")"]);
+    xlabel("{\ity}");
+    ylabel("{\itz}");
+
+    mses(p) = meansquarederror(cast(guidingImage, class(real(estimation))), real(estimation));
+end
+
 figure;
-plot(1:iterations, history);
-title("Average Loss");
-xlabel("Iteration");
-ylabel("LASSO Value");
+plot(ps, mses);
+title("MSE vs. {\itp}");
+xlabel("{\itp}");
+ylabel("Estimation MSE");
