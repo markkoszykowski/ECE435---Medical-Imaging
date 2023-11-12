@@ -1,0 +1,43 @@
+/CSI1/sub-CSI1_ses-16_anat_sub-CSI1_ses-16_run-01_T1w.nii
+/CSI1/sub-CSI1_ses-16_anat_sub-CSI1_ses-16_run-02_T1w.nii
+/CSI1/sub-CSI1_ses-16_anat_sub-CSI1_ses-16_T2w.nii
+
+/CSI2/sub-CSI2_ses-16_anat_sub-CSI2_ses-16_T1w.nii
+/CSI2/sub-CSI2_ses-16_anat_sub-CSI2_ses-16_T2w.nii
+
+/CSI3/sub-CSI3_ses-16_anat_sub-CSI3_ses-16_T1w.nii
+
+/CSI4/sub-CSI4_ses-10_anat_sub-CSI4_ses-10_T1w.nii
+
+
+# Windows default autosave extension
+*.asv
+
+# OSX / *nix default autosave extension
+*.m~
+
+# Compiled MEX binaries (all platforms)
+*.mex*
+
+# Packaged app and toolbox files
+*.mlappinstall
+*.mltbx
+
+# Generated helpsearch folders
+helpsearch*/
+
+# Simulink code generation folders
+slprj/
+sccprj/
+
+# Matlab code generation folders
+codegen/
+
+# Simulink autosave extension
+*.autosave
+
+# Simulink cache files
+*.slxc
+
+# Octave session info
+octave-workspace
